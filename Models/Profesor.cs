@@ -15,7 +15,7 @@ namespace InstitutoUrquiza.Models
         public int Id { get; set; }
 
         [MaxLength(20), MinLength(1)] //Pongo 1 como MinLenght para permitir iniciales como nombre
-        [Required(ErrorMessage = "Ingrese su nombre")] //DUDA - ESTO LO TENGO QUE PONER, SI VOY A INGRESAR AUTOMÁTICAMENTE TODOS LOS REGISTROS MEDIANTE UNA SEED???
+        [Required(ErrorMessage = "Ingrese su nombre")] //TODO: check si tengo que poner esto (idem Estudiante)
         [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "El nombre ingresado no es válido. Por favor, intente nuevamente.")]
         [Display(Name = "Nombre")]
         public String Nombre { get; set; }
@@ -27,32 +27,36 @@ namespace InstitutoUrquiza.Models
         public String Apellido { get; set; }
 
 
-        [MaxLength(8), MinLength(7)] //DUDA - ESTO NO ES NECESARIO ACÁ PORQUE LE PUSIMOS LA MIN/MAX LENGTH MÁS ABAJO? CHECK SI HAY QUE SACARLO
         [Required(ErrorMessage = "Ingrese su número de DNI.")]
-        [RegularExpression("^[\\s\\S]{7,8}", ErrorMessage = "El DNI ingresado no es válido. Por favor, intente nuevamente.")] //DUDA - ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS???
+        [RegularExpression("^[\\s\\S]{7,8}", ErrorMessage = "El DNI ingresado no es válido. Por favor, intente nuevamente.")] //TODO: CHECK SI ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS
         [Display(Name = "DNI")]
         public String Dni { get; set; }
 
 
         [Required(ErrorMessage = "Ingrese su e-mail.")]
-        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "El e-mail ingresado no es válido. Por favor, intente nuevamente.")] //DUDA - cómo está armada esta Regex???
-        [Display(Name = "e-mail")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "El e-mail ingresado no es válido. Por favor, intente nuevamente.")] 
         public String Email { get; set; }
 
-        [MaxLength(8), MinLength(8)] //DUDA - ESTO NO ES NECESARIO ACÁ PORQUE LE PUSIMOS LA MIN/MAX LENGTH MÁS ABAJO? CHECK SI HAY QUE SACARLO
         [Required(ErrorMessage = "Ingrese su número de celular.")]
-        [RegularExpression("^[\\s\\S]{8,8}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] //DUDA - ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS???
-        //Podemos validar el código de área o el 15 de alguna manera?
+        [RegularExpression("^[\\s\\S]{8,8}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] //TODO: CHECK SI ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS
         [Display(Name = "Teléfono celular")]
         public String Celular { get; set; }
 
-        public DateTime FechaIngreso { get; set; } //DUDA - CÓMO VALIDAMOS FECHA???
+        public DateTime FechaIngreso { get; set; }
 
+        public String _esActivo; 
+        public String esActivo  
+        {
+            get { return _esActivo; }
+            set
+            {
+                    if (value.ToLower() == "si" || value.ToLower() == "no")
+                    {
+                        _esActivo = value.ToLower(); //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
+                    }
+                }
 
-        public Boolean esActivo { get; set; }
-        
+            }
 
-
-
-    }
+        }
 }

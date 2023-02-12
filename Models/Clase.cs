@@ -10,7 +10,7 @@ namespace InstitutoUrquiza.Models
     public class Clase
 
     {
-        //DUDA - NECESITAMOS VALIDACIONES ACÁ? 
+        //TODO: CHECK SI NECESITO INCLUIR VALIDACIONES ACÁ 
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,6 +18,7 @@ namespace InstitutoUrquiza.Models
 
         public DateTime horario { get; set; }
 
+        //TODO: VALIDAR NUMEROS DE SALON 
         public int NumSalon { get; set; }
 
         public Profesor Profesor { get; set; }
