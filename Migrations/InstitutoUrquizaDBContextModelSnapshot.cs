@@ -107,13 +107,11 @@ namespace InstitutoUrquiza.Migrations
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -127,8 +125,8 @@ namespace InstitutoUrquiza.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<bool>("esActivo")
-                        .HasColumnType("bit");
+                    b.Property<string>("esActivo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

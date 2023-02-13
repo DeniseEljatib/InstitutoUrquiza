@@ -38,25 +38,29 @@ namespace InstitutoUrquiza.Models
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Ingrese su número de celular.")]
-        [RegularExpression("^[\\s\\S]{8,8}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] //TODO: CHECK SI ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS
+        [RegularExpression("^[\\s\\S]{10,10}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] //TODO: CHECK SI ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS
         [Display(Name = "Teléfono celular")]
         public String Celular { get; set; }
 
         public DateTime FechaIngreso { get; set; }
 
-        public String _esActivo; 
-        public String esActivo  
+        [Required(ErrorMessage = "Indique si el profesor está actualmente dando clases en el Instituto.")]
+        [Display(Name = "¿Profesor/a activo/a?")]
+        public String _esActivo;
+
+        public String esActivo
         {
             get { return _esActivo; }
             set
             {
-                    if (value.ToLower() == "si" || value.ToLower() == "no")
-                    {
-                        _esActivo = value.ToLower(); //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
-                    }
+                if (value.ToLower() == "si" || value.ToLower() == "no")    {
+                    _esActivo = value.ToLower(); 
+                    //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
                 }
-
             }
 
         }
+
+    }
 }
+

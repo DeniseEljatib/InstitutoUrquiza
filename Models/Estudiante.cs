@@ -42,7 +42,7 @@ namespace InstitutoUrquiza.Models
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Ingrese su número de celular.")]
-        [RegularExpression("^[\\s\\S]{8,8}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] 
+        [RegularExpression("^[\\s\\S]{10,10}", ErrorMessage = "El celular ingresado no es válido. Por favor, intente nuevamente.")] 
         //TODO: CHECK SI ESTÁ BIEN ESTA REGEX PARA UNA STRING QUE SÓLO ACEPTE NÚMEROS
         //TODO: CHECK si puedo validar el código de área o el 15 de alguna manera
         [Display(Name = "Teléfono celular")]
@@ -59,13 +59,18 @@ namespace InstitutoUrquiza.Models
         // public Boolean cuotaAlDia { get; set { "Sí", "No"}; }
         public String _cuotaAlDia;
 
+        ////TODO: VER CÓMO HACER PARA QUE SE DISPLAYEE EL NIVEL EN LA CREACIÓN DE ALUMNO
+        //[EnumDataType(typeof(Nivel))]
+        //public Nivel Nivel { get; set; }
+
         public String cuotaAlDia
         {
             get { return _cuotaAlDia; }
             set
             {
                 if (value.ToLower() == "si" || value.ToLower() == "no") {
-                    _cuotaAlDia = value.ToLower(); //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
+                    _cuotaAlDia = value.ToLower(); 
+                    //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
                 }
             }
 
