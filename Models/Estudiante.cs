@@ -63,26 +63,29 @@ namespace InstitutoUrquiza.Models
         [EnumDataType(typeof(Nivel))]
         public Nivel Nivel { get; set; }
 
-        [Required(ErrorMessage = "Indique si el estudiante tiene la cuota al día.")]
+        [Required(ErrorMessage = "Dato inválido. Por favor, indique si el estudiante tiene la cuota al día ingresando 'SI' o 'NO'.")]
         [Display(Name = "¿Cuota al día?")]
         public String cuotaAlDia
-        {
+
+          {
             get { return _cuotaAlDia; }
             set
             {
-                if (value.ToLower() == "si" || value.ToLower() == "No" ) 
-                    { 
-                    _cuotaAlDia = value.ToLower(); 
-                   
-                }
-                else
+                if (value == "sí" || value == "Sí"|| value == "SÍ" || value == "si" || value == "Si" || value == "SI")
                 {
-                    _cuotaAlDia = "No";
+                    _cuotaAlDia = "SI";
+
+                }
+                else if (value == "no" || value == "No" || value == "NO")
+                {
+                    _cuotaAlDia = "NO";
 
                 }
             }
 
         }
+
+
 
 
     }

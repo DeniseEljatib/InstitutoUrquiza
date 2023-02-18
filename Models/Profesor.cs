@@ -49,25 +49,29 @@ namespace InstitutoUrquiza.Models
         
         public String _esActivo;
 
-        [Required(ErrorMessage = "Indique si el profesor está actualmente dando clases en el Instituto.")]
+        
+        [Required(ErrorMessage = "Dato inválido. Por favor, indique si el/la profe está actualmente dando clases en el Instituto ingresando 'SI' o 'NO'.")]
         [Display(Name = "¿Profe activo/a?")]
         public String esActivo
+
         {
             get { return _esActivo; }
             set
             {
-                if (value.ToLower() == "si" || value.ToLower() == "no")    {
-                    _esActivo = value.ToLower(); 
-                   
-                }
-                else
+                if (value == "sí" || value == "Sí" || value == "SÍ" || value == "si" || value == "Si" || value == "SI")
                 {
-                    _esActivo = "no";
+                    _esActivo = "SI";
+
+                }
+                else if (value == "no" || value == "No" || value == "NO")
+                {
+                    _esActivo = "NO";
 
                 }
             }
 
         }
+
 
     }
 }
