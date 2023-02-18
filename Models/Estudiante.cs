@@ -59,9 +59,10 @@ namespace InstitutoUrquiza.Models
         // public Boolean cuotaAlDia { get; set { "Sí", "No"}; }
         public String _cuotaAlDia;
 
-        ////TODO: VER CÓMO HACER PARA QUE SE DISPLAYEE EL NIVEL EN LA CREACIÓN DE ALUMNO
-        //[EnumDataType(typeof(Nivel))]
-        //public Nivel Nivel { get; set; }
+
+        [Display(Name = "Nivel")]
+        [EnumDataType(typeof(Nivel))]
+        public Nivel Nivel { get; set; }
 
         public String cuotaAlDia
         {
@@ -70,7 +71,12 @@ namespace InstitutoUrquiza.Models
             {
                 if (value.ToLower() == "si" || value.ToLower() == "no") {
                     _cuotaAlDia = value.ToLower(); 
-                    //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
+                   
+                }
+                else
+                {
+                    _cuotaAlDia = "no";
+
                 }
             }
 

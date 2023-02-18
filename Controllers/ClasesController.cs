@@ -10,22 +10,23 @@ using InstitutoUrquiza.Models;
 
 namespace InstitutoUrquiza.Controllers
 {
-    public class EstudianteController : Controller
+    public class ClasesController : Controller
     {
         private readonly InstitutoUrquizaDBContext _context;
 
-        public EstudianteController(InstitutoUrquizaDBContext context)
+        public ClasesController(InstitutoUrquizaDBContext context)
         {
             _context = context;
         }
 
-        // GET: Estudiante
+        // GET: Clases
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Estudiantes.ToListAsync());
+            var institutoUrquizaDBContext = _context.Clases.Include(c => c.Estudiante).Include(c => c.Profesor);
+            return View(await institutoUrquizaDBContext.ToListAsync());
         }
 
-        // GET: Estudiante/Details/5
+        // GET: Clases/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes
+            var clase = await _context.Clases
+                .Include(c => c.Estudiante)
+                .Include(c => c.Profesor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estudiante == null)
+            if (clase == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(clase);
         }
 
-        // GET: Estudiante/Create
+        // GET: Clases/Create
         public IActionResult Create()
         {
+            ViewData["EstudianteId"] = new SelectList(_context.Estudiantes, "Id", "Apellido");
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido");
             return View();
         }
 
-        // POST: Estudiante/Create
+        // POST: Clases/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Edad,Email,Celular,FechaIngreso,cuotaAlDia")] Estudiante estudiante)
+        public async Task<IActionResult> Create([Bind("Id,horario,Salon,ProfesorId,Actividad,EstudianteId")] Clase clase)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(estudiante);
+                _context.Add(clase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            ViewData["EstudianteId"] = new SelectList(_context.Estudiantes, "Id", "Apellido", clase.EstudianteId);
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", clase.ProfesorId);
+            return View(clase);
         }
 
-        // GET: Estudiante/Edit/5
+        // GET: Clases/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,24 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes.FindAsync(id);
-            if (estudiante == null)
+            var clase = await _context.Clases.FindAsync(id);
+            if (clase == null)
             {
                 return NotFound();
             }
-            return View(estudiante);
+            ViewData["EstudianteId"] = new SelectList(_context.Estudiantes, "Id", "Apellido", clase.EstudianteId);
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", clase.ProfesorId);
+            return View(clase);
         }
 
-        // POST: Estudiante/Edit/5
+        // POST: Clases/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Edad,Email,Celular,FechaIngreso,cuotaAlDia")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,horario,Salon,ProfesorId,Actividad,EstudianteId")] Clase clase)
         {
-            if (id != estudiante.Id)
+            if (id != clase.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace InstitutoUrquiza.Controllers
             {
                 try
                 {
-                    _context.Update(estudiante);
+                    _context.Update(clase);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstudianteExists(estudiante.Id))
+                    if (!ClaseExists(clase.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +122,12 @@ namespace InstitutoUrquiza.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            ViewData["EstudianteId"] = new SelectList(_context.Estudiantes, "Id", "Apellido", clase.EstudianteId);
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", clase.ProfesorId);
+            return View(clase);
         }
 
-        // GET: Estudiante/Delete/5
+        // GET: Clases/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +135,32 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes
+            var clase = await _context.Clases
+                .Include(c => c.Estudiante)
+                .Include(c => c.Profesor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estudiante == null)
+            if (clase == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(clase);
         }
 
-        // POST: Estudiante/Delete/5
+        // POST: Clases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estudiante = await _context.Estudiantes.FindAsync(id);
-            _context.Estudiantes.Remove(estudiante);
+            var clase = await _context.Clases.FindAsync(id);
+            _context.Clases.Remove(clase);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstudianteExists(int id)
+        private bool ClaseExists(int id)
         {
-            return _context.Estudiantes.Any(e => e.Id == id);
+            return _context.Clases.Any(e => e.Id == id);
         }
     }
 }

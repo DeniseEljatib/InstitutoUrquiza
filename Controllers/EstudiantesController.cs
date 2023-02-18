@@ -10,22 +10,22 @@ using InstitutoUrquiza.Models;
 
 namespace InstitutoUrquiza.Controllers
 {
-    public class ProfesorController : Controller
+    public class EstudiantesController : Controller
     {
         private readonly InstitutoUrquizaDBContext _context;
 
-        public ProfesorController(InstitutoUrquizaDBContext context)
+        public EstudiantesController(InstitutoUrquizaDBContext context)
         {
             _context = context;
         }
 
-        // GET: Profesor
+        // GET: Estudiantes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Profesores.ToListAsync());
+            return View(await _context.Estudiantes.ToListAsync());
         }
 
-        // GET: Profesor/Details/5
+        // GET: Estudiantes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var profesor = await _context.Profesores
+            var estudiante = await _context.Estudiantes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (profesor == null)
+            if (estudiante == null)
             {
                 return NotFound();
             }
 
-            return View(profesor);
+            return View(estudiante);
         }
 
-        // GET: Profesor/Create
+        // GET: Estudiantes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Profesor/Create
+        // POST: Estudiantes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Email,Celular,FechaIngreso,esActivo")] Profesor profesor)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Edad,Email,Celular,FechaIngreso,Nivel,cuotaAlDia")] Estudiante estudiante)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(profesor);
+                _context.Add(estudiante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(profesor);
+            return View(estudiante);
         }
 
-        // GET: Profesor/Edit/5
+        // GET: Estudiantes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var profesor = await _context.Profesores.FindAsync(id);
-            if (profesor == null)
+            var estudiante = await _context.Estudiantes.FindAsync(id);
+            if (estudiante == null)
             {
                 return NotFound();
             }
-            return View(profesor);
+            return View(estudiante);
         }
 
-        // POST: Profesor/Edit/5
+        // POST: Estudiantes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Email,Celular,FechaIngreso,esActivo")] Profesor profesor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Dni,Edad,Email,Celular,FechaIngreso,Nivel,cuotaAlDia")] Estudiante estudiante)
         {
-            if (id != profesor.Id)
+            if (id != estudiante.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace InstitutoUrquiza.Controllers
             {
                 try
                 {
-                    _context.Update(profesor);
+                    _context.Update(estudiante);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProfesorExists(profesor.Id))
+                    if (!EstudianteExists(estudiante.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace InstitutoUrquiza.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(profesor);
+            return View(estudiante);
         }
 
-        // GET: Profesor/Delete/5
+        // GET: Estudiantes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace InstitutoUrquiza.Controllers
                 return NotFound();
             }
 
-            var profesor = await _context.Profesores
+            var estudiante = await _context.Estudiantes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (profesor == null)
+            if (estudiante == null)
             {
                 return NotFound();
             }
 
-            return View(profesor);
+            return View(estudiante);
         }
 
-        // POST: Profesor/Delete/5
+        // POST: Estudiantes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var profesor = await _context.Profesores.FindAsync(id);
-            _context.Profesores.Remove(profesor);
+            var estudiante = await _context.Estudiantes.FindAsync(id);
+            _context.Estudiantes.Remove(estudiante);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfesorExists(int id)
+        private bool EstudianteExists(int id)
         {
-            return _context.Profesores.Any(e => e.Id == id);
+            return _context.Estudiantes.Any(e => e.Id == id);
         }
     }
 }

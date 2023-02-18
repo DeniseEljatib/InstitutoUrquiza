@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstitutoUrquiza.Migrations
 {
     [DbContext(typeof(InstitutoUrquizaDBContext))]
-    [Migration("20230210113428_InstitutoUrquiza.Context.InstitutoUrquizaDBContext")]
+    [Migration("20230217122258_InstitutoUrquiza.Context.InstitutoUrquizaDBContext")]
     partial class InstitutoUrquizaContextInstitutoUrquizaDBContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,16 +31,21 @@ namespace InstitutoUrquiza.Migrations
                     b.Property<int>("Actividad")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumSalon")
+                    b.Property<int>("EstudianteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProfesorId")
+                    b.Property<int>("ProfesorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Salon")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("horario")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EstudianteId");
 
                     b.HasIndex("ProfesorId");
 
@@ -63,9 +68,6 @@ namespace InstitutoUrquiza.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClaseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Dni")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,6 +82,9 @@ namespace InstitutoUrquiza.Migrations
                     b.Property<DateTime>("FechaIngreso")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Nivel")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -89,8 +94,6 @@ namespace InstitutoUrquiza.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClaseId");
 
                     b.ToTable("Estudiantes");
                 });
@@ -109,13 +112,11 @@ namespace InstitutoUrquiza.Migrations
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -129,8 +130,8 @@ namespace InstitutoUrquiza.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<bool>("esActivo")
-                        .HasColumnType("bit");
+                    b.Property<string>("esActivo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -139,16 +140,17 @@ namespace InstitutoUrquiza.Migrations
 
             modelBuilder.Entity("InstitutoUrquiza.Models.Clase", b =>
                 {
+                    b.HasOne("InstitutoUrquiza.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("InstitutoUrquiza.Models.Profesor", "Profesor")
                         .WithMany()
-                        .HasForeignKey("ProfesorId");
-                });
-
-            modelBuilder.Entity("InstitutoUrquiza.Models.Estudiante", b =>
-                {
-                    b.HasOne("InstitutoUrquiza.Models.Clase", null)
-                        .WithMany("Estudiantes")
-                        .HasForeignKey("ClaseId");
+                        .HasForeignKey("ProfesorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

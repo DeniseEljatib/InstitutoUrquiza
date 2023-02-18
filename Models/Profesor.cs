@@ -55,7 +55,12 @@ namespace InstitutoUrquiza.Models
             {
                 if (value.ToLower() == "si" || value.ToLower() == "no")    {
                     _esActivo = value.ToLower(); 
-                    //TODO: VERIFICAR SI HAY QUE AGREGAR THROW EXCEPTION
+                   
+                }
+                else
+                {
+                    _esActivo = "no";
+
                 }
             }
 
