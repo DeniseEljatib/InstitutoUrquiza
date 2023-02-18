@@ -22,7 +22,7 @@ namespace InstitutoUrquiza.Models
         [Display(Name = "Día y horario")]
         public DateTime horario { get; set; }
 
-        [Required(ErrorMessage = "Indique el profesor asignado.")]
+        //[Required(ErrorMessage = "Indique el profesor asignado.")]
         [Display(Name = "Profesor")]
         public Profesor Profesor { get; set; }
 
@@ -30,7 +30,7 @@ namespace InstitutoUrquiza.Models
         public int ProfesorId { get; set; }
 
 
-        [Required(ErrorMessage = "Indique el/la alumno/a que solicita la clase.")]
+        //[Required(ErrorMessage = "Indique el/la alumno/a que solicita la clase.")]
         [Display(Name = "Alumno/a")]
         public Estudiante Estudiante { get; set; }
 

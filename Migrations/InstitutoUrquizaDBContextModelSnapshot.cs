@@ -89,6 +89,7 @@ namespace InstitutoUrquiza.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("cuotaAlDia")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -129,6 +130,7 @@ namespace InstitutoUrquiza.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("esActivo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

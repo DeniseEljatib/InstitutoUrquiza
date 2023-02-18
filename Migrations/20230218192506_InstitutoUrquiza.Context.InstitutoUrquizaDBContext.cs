@@ -21,7 +21,7 @@ namespace InstitutoUrquiza.Migrations
                     Celular = table.Column<string>(nullable: false),
                     FechaIngreso = table.Column<DateTime>(nullable: false),
                     Nivel = table.Column<int>(nullable: false),
-                    cuotaAlDia = table.Column<string>(nullable: true)
+                    cuotaAlDia = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,7 @@ namespace InstitutoUrquiza.Migrations
                     Email = table.Column<string>(nullable: false),
                     Celular = table.Column<string>(nullable: false),
                     FechaIngreso = table.Column<DateTime>(nullable: false),
-                    esActivo = table.Column<string>(nullable: true)
+                    esActivo = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,11 +53,11 @@ namespace InstitutoUrquiza.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    horario = table.Column<DateTime>(nullable: false),
-                    Salon = table.Column<int>(nullable: false),
-                    ProfesorId = table.Column<int>(nullable: false),
                     Actividad = table.Column<int>(nullable: false),
-                    EstudianteId = table.Column<int>(nullable: false)
+                    horario = table.Column<DateTime>(nullable: false),
+                    ProfesorId = table.Column<int>(nullable: false),
+                    EstudianteId = table.Column<int>(nullable: false),
+                    Salon = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
