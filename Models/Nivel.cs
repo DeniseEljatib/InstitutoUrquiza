@@ -7,8 +7,8 @@ namespace InstitutoUrquiza.Models
 {
     public enum Nivel
     {
-        PRINCIPIANTE,
-        INTERMEDIO,
-        AVANZADO
-            }
+        Principiante,
+        Intermedio,
+        Avanzado
+    }
 }

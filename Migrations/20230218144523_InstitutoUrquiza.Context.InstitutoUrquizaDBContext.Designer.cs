@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstitutoUrquiza.Migrations
 {
     [DbContext(typeof(InstitutoUrquizaDBContext))]
-    [Migration("20230217122258_InstitutoUrquiza.Context.InstitutoUrquizaDBContext")]
+    [Migration("20230218144523_InstitutoUrquiza.Context.InstitutoUrquizaDBContext")]
     partial class InstitutoUrquizaContextInstitutoUrquizaDBContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

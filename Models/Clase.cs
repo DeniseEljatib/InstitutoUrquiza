@@ -15,12 +15,12 @@ namespace InstitutoUrquiza.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Display(Name = "Día y horario")]
         public DateTime horario { get; set; }
 
-             
 
-        [EnumDataType(typeof(NumeroSalon))]
-        public NumeroSalon Salon { get; set; } 
+        [EnumDataType(typeof(TipoActividad))]
+        public TipoActividad Actividad { get; set; }
 
 
         [Display(Name = "Profesor")]
@@ -29,9 +29,7 @@ namespace InstitutoUrquiza.Models
         [Display(Name = "Profesor")]
         public int ProfesorId { get; set; }
 
-        [EnumDataType(typeof(TipoActividad))] 
-        public TipoActividad Actividad { get; set; }
-
+     
 
         [Display(Name = "Estudiante")]
         public Estudiante Estudiante { get; set; }
@@ -41,6 +39,12 @@ namespace InstitutoUrquiza.Models
 
 
         //public List<Estudiante> Estudiantes { get; set; }
+
+        [Display(Name = "Salón")]
+        [EnumDataType(typeof(NumeroSalon))]
+        public NumeroSalon Salon { get; set; }
+
+
 
     }
 }
