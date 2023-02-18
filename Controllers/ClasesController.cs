@@ -59,7 +59,7 @@ namespace InstitutoUrquiza.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,horario,Salon,ProfesorId,Actividad,EstudianteId")] Clase clase)
+        public async Task<IActionResult> Create([Bind("Id,Actividad,horario,ProfesorId,EstudianteId,Salon")] Clase clase)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace InstitutoUrquiza.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,horario,Salon,ProfesorId,Actividad,EstudianteId")] Clase clase)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Actividad,horario,ProfesorId,EstudianteId,Salon")] Clase clase)
         {
             if (id != clase.Id)
             {
