@@ -23,10 +23,10 @@ namespace InstitutoUrquiza.Models
         public DateTime horario { get; set; }
 
         //[Required(ErrorMessage = "Indique el profesor asignado.")]
-        [Display(Name = "Profesor")]
+        [Display(Name = "Profe")]
         public Profesor Profesor { get; set; }
 
-        [Display(Name = "Profesor")]
+        [Display(Name = "Profe")]
         public int ProfesorId { get; set; }
 
 

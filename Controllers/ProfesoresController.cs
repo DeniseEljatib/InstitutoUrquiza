@@ -58,9 +58,44 @@ namespace InstitutoUrquiza.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(profesor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var existeProfeDni = from p in _context.Profesores
+                                     where p.Dni == profesor.Dni
+                                     select p;
+
+                var existeProfeEmail = from p in _context.Profesores
+                                       where p.Email == profesor.Email
+                                       select p;
+
+
+                if (!existeProfeDni.Any() && !existeProfeEmail.Any())
+
+                {
+                    _context.Add(profesor);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                else
+                {
+                    if (existeProfeDni.Any() && existeProfeEmail.Any())
+
+                    {
+                        ModelState.AddModelError("Dni", "Ya existe un profe con ese DNI. Por favor, revise los datos ingresados.");
+                        ModelState.AddModelError("Email", "Ya existe un profe con ese e-mail. Por favor, revise los datos ingresados.");
+                    }
+
+                    else if (existeProfeDni.Any())
+                    {
+                        ModelState.AddModelError("Dni", "Ya existe un profe con ese DNI. Por favor, revise los datos ingresados.");
+                    }
+                    else if (existeProfeEmail.Any())
+                    {
+                        ModelState.AddModelError("Email", "Ya existe un profe con ese e-mail. Por favor, revise los datos ingresados.");
+                    }
+
+
+                    return View();
+                }
             }
             return View(profesor);
         }

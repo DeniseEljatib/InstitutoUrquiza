@@ -79,7 +79,7 @@ namespace InstitutoUrquiza.Controllers
                     if (existeAlumnoDni.Any() && existeAlumnoEmail.Any())
                     {
                         ModelState.AddModelError("Dni", "Ya existe un alumno con ese DNI. Por favor, revise los datos ingresados.");
-                        ModelState.AddModelError("Email", "Ya existe un alumno con ese email. Por favor, revise los datos ingresados.");
+                        ModelState.AddModelError("Email", "Ya existe un alumno con ese e-mail. Por favor, revise los datos ingresados.");
                     }
                     else if (existeAlumnoDni.Any())
                     {
@@ -87,18 +87,14 @@ namespace InstitutoUrquiza.Controllers
                     }
                     else if (existeAlumnoEmail.Any())
                     {
-                        ModelState.AddModelError("Email", "Ya existe un alumno con ese email. Por favor, revise los datos ingresados.");
+                        ModelState.AddModelError("Email", "Ya existe un alumno con ese e-mail. Por favor, revise los datos ingresados.");
                     }
 
 
                     return View();
                 }
-
-
             }
             return View(estudiante);
-
-
         }
 
         // GET: Estudiantes/Edit/5
