@@ -56,13 +56,49 @@ namespace InstitutoUrquiza.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Edad,Email,Celular,FechaIngreso,Nivel,cuotaAlDia")] Estudiante estudiante)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(estudiante);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var existeAlumnoDni = from e in _context.Estudiantes
+                                      where e.Dni == estudiante.Dni
+                                      select e;
+
+                var existeAlumnoEmail = from e in _context.Estudiantes
+                                        where e.Email == estudiante.Email
+                                        select e;
+
+                if (!existeAlumnoDni.Any() && !existeAlumnoEmail.Any())
+                {
+                    _context.Add(estudiante);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                    if (existeAlumnoDni.Any() && existeAlumnoEmail.Any())
+                    {
+                        ModelState.AddModelError("Dni", "Ya existe un alumno con ese DNI. Por favor, revise los datos ingresados.");
+                        ModelState.AddModelError("Email", "Ya existe un alumno con ese email. Por favor, revise los datos ingresados.");
+                    }
+                    else if (existeAlumnoDni.Any())
+                    {
+                        ModelState.AddModelError("Dni", "Ya existe un alumno con ese DNI. Por favor, revise los datos ingresados.");
+                    }
+                    else if (existeAlumnoEmail.Any())
+                    {
+                        ModelState.AddModelError("Email", "Ya existe un alumno con ese email. Por favor, revise los datos ingresados.");
+                    }
+
+
+                    return View();
+                }
+
+
             }
             return View(estudiante);
+
+
         }
 
         // GET: Estudiantes/Edit/5

@@ -63,6 +63,21 @@ namespace InstitutoUrquiza.Controllers
         {
             if (ModelState.IsValid)
             {
+                var profeOcupadoEnEseHorario = from c in _context.Clases
+                                               where c.ProfesorId == clase.ProfesorId && c.horario == clase.horario
+                                               select c;
+
+                var alumnoOcupadoEnEseHorario = from c in _context.Clases
+                                               where c.EstudianteId == clase.EstudianteId && c.horario == clase.horario
+                                               select c;
+
+                var salonOcupadoEnEseHorario = from c in _context.Clases
+                                               where c.Salon == clase.Salon && c.horario == clase.horario
+                                               select c; 
+
+
+
+
                 _context.Add(clase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

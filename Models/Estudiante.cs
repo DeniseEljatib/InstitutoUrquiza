@@ -71,12 +71,13 @@ namespace InstitutoUrquiza.Models
             get { return _cuotaAlDia; }
             set
             {
-                if (value == "sí" || value == "Sí"|| value == "SÍ" || value == "si" || value == "Si" || value == "SI")
+                if (value.ToUpper() == "SI" || value.ToUpper() == "SÍ")
                 {
                     _cuotaAlDia = "SI";
 
                 }
-                else if (value == "no" || value == "No" || value == "NO")
+
+                else if (value.ToUpper() == "NO" )
                 {
                     _cuotaAlDia = "NO";
 
