@@ -132,9 +132,46 @@ namespace InstitutoUrquiza.Controllers
             {
                 try
                 {
+
+                    var existeProfeDni = from p in _context.Profesores
+                                         where p.Dni == profesor.Dni
+                                         select p;
+
+                    var existeProfeEmail = from p in _context.Profesores
+                                           where p.Email == profesor.Email
+                                           select p;
+
+                    if (!existeProfeDni.Any() && !existeProfeEmail.Any())
+
+                    { 
                     _context.Update(profesor);
                     await _context.SaveChangesAsync();
+
+                    }
+                    else 
+
+                    {
+                        if (existeProfeDni.Any() && existeProfeEmail.Any())
+
+                        {
+                            ModelState.AddModelError("Dni", "Ya existe un profe con ese DNI. Por favor, revise los datos ingresados.");
+                            ModelState.AddModelError("Email", "Ya existe un profe con ese e-mail. Por favor, revise los datos ingresados.");
+                        }
+
+                        else if (existeProfeDni.Any())
+                        {
+                            ModelState.AddModelError("Dni", "Ya existe un profe con ese DNI. Por favor, revise los datos ingresados.");
+                        }
+                        else if (existeProfeEmail.Any())
+                        {
+                            ModelState.AddModelError("Email", "Ya existe un profe con ese e-mail. Por favor, revise los datos ingresados.");
+                        }
+
+
+                        return View();
+                    }
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProfesorExists(profesor.Id))

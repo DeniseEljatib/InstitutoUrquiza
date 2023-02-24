@@ -129,9 +129,42 @@ namespace InstitutoUrquiza.Controllers
             {
                 try
                 {
-                    _context.Update(estudiante);
-                    await _context.SaveChangesAsync();
+
+                    var existeAlumnoDni = from e in _context.Estudiantes
+                                          where e.Dni == estudiante.Dni
+                                          select e;
+
+                    var existeAlumnoEmail = from e in _context.Estudiantes
+                                            where e.Email == estudiante.Email
+                                            select e;
+
+                    if (!existeAlumnoDni.Any() && !existeAlumnoEmail.Any())
+                    {
+                        _context.Update(estudiante);
+                        await _context.SaveChangesAsync();
+
+                    }
+                    else
+                    {
+                        if (existeAlumnoDni.Any() && existeAlumnoEmail.Any())
+                        {
+                            ModelState.AddModelError("Dni", "Ya existe un alumno con ese DNI. Por favor, revise los datos ingresados.");
+                            ModelState.AddModelError("Email", "Ya existe un alumno con ese e-mail. Por favor, revise los datos ingresados.");
+                        }
+                        else if (existeAlumnoDni.Any())
+                        {
+                            ModelState.AddModelError("Dni", "Ya existe un alumno con ese DNI. Por favor, revise los datos ingresados.");
+                        }
+                        else if (existeAlumnoEmail.Any())
+                        {
+                            ModelState.AddModelError("Email", "Ya existe un alumno con ese e-mail. Por favor, revise los datos ingresados.");
+                        }
+
+                        return View();
+                    }
+
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!EstudianteExists(estudiante.Id))
