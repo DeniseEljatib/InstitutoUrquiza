@@ -2,27 +2,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center hero-image   ">
+<div class="text-center">
 
-    <img src="C:\Users\denis\source\repos\InstitutoUrquiza\Images\bg.png" style="z-index:-10" />
+    <img src="\imgs\BienvenidesCorto.png" style="z-index:-10; width: 100%; position:relative" />
 
-    <h1 class="display-4">¡Bienvenidos a Instituto Urquiza!</h1>
-    <p>El mejor lugar en Villa Urquiza para aprender y practicar Acrobacia Aérea, con profesores particulares y las mejores instalaciones.</p>
+    @*<h1 class="display-4">¡Bienvenidos a Instituto Urquiza!</h1>
+    <p>El mejor lugar en Villa Urquiza para aprender y practicar Acrobacia Aérea, con profesores particulares y las mejores instalaciones.</p>*@
+
+    <div class="my-5 text-center">
+
+        <form asp-area="" asp-controller="Clases" asp-action="Create"> <button class="btn btn-info btn-lg" style="width: 400px;">  
+            <span class="h2"> Agendar clase </span></button> </form>
+
+    </div>
+
+    <div class="d-flex justify-content-around">
 
 
-
-    <button class="btn btn-secondary btn-lg btn-block" style="width: 500px;">  Agendar Clase</button>
-
-
-    <button>Gestionar Clases</button>
+        <form asp-area="" asp-controller="Clases" asp-action="Index"> <button class="fs-3 btn btn-danger btn-lg">Gestionar Clases</button> </form>
 
 
-    <button>Gestionar Profes</button>
+        <form asp-area="" asp-controller="Profesores" asp-action="Index"> <button class="fs-3 btn btn-danger btn-lg">Gestionar Profes</button> </form>
 
 
-    <button>Gestionar Alumnas/os</button>
+        <form asp-area="" asp-controller="Estudiantes" asp-action="Index">  <button class="fs-3 btn btn-danger btn-lg">Gestionar Alumnas/os</button> </form>
 
-    
+    </div>
 
 </div>
 
