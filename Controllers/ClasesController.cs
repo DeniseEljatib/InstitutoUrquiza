@@ -84,9 +84,9 @@ namespace InstitutoUrquiza.Controllers
 
                 Boolean salonIncorrecto = salonIncorrectoAro || salonIncorrectoTela || salonIncorrectoTrapecio;
 
-               
 
-                if (!profeOcupadoEnEseHorario.Any() && !alumnoOcupadoEnEseHorario.Any() && !salonOcupadoEnEseHorario.Any()&& !salonIncorrecto )
+
+                if (!profeOcupadoEnEseHorario.Any() && !alumnoOcupadoEnEseHorario.Any() && !salonOcupadoEnEseHorario.Any() && !salonIncorrecto)
                 {
                     _context.Add(clase);
                     await _context.SaveChangesAsync();
@@ -112,21 +112,21 @@ namespace InstitutoUrquiza.Controllers
 
                     }
 
-                    
+
                     if (salonIncorrectoAro)
                     {
                         ModelState.AddModelError(String.Empty, "El salón de Aro sólo está habilitado para clases de esa actividad.");
 
                     }
 
-                    
+
                     if (salonIncorrectoTela)
                     {
                         ModelState.AddModelError(String.Empty, "El salón de Tela sólo está habilitado para clases de esa actividad.");
 
                     }
 
-                    
+
                     if (salonIncorrectoTrapecio)
                     {
                         ModelState.AddModelError(String.Empty, "El salón de Trapecio sólo está habilitado para clases de esa actividad.");
@@ -186,8 +186,88 @@ namespace InstitutoUrquiza.Controllers
             {
                 try
                 {
-                    _context.Update(clase);
-                    await _context.SaveChangesAsync();
+                    var profeOcupadoEnEseHorario = from c in _context.Clases
+                                                   where c.ProfesorId == clase.ProfesorId && c.horario == clase.horario
+                                                   select c;
+
+                    var alumnoOcupadoEnEseHorario = from c in _context.Clases
+                                                    where c.EstudianteId == clase.EstudianteId && c.horario == clase.horario
+                                                    select c;
+
+                    var salonOcupadoEnEseHorario = from c in _context.Clases
+                                                   where c.Salon == clase.Salon && c.horario == clase.horario
+                                                   select c;
+
+                    var salonIncorrectoAro = clase.Salon == NumeroSalon.ARO_PB && clase.Actividad != TipoActividad.Aro;
+
+                    var salonIncorrectoTela = clase.Salon == NumeroSalon.TELA_PB && clase.Actividad != TipoActividad.Tela;
+
+                    var salonIncorrectoTrapecio = clase.Salon == NumeroSalon.TRAPECIO_PB && clase.Actividad != TipoActividad.Trapecio;
+
+
+                    Boolean salonIncorrecto = salonIncorrectoAro || salonIncorrectoTela || salonIncorrectoTrapecio;
+
+
+
+                    if (!profeOcupadoEnEseHorario.Any() && !alumnoOcupadoEnEseHorario.Any() && !salonOcupadoEnEseHorario.Any() && !salonIncorrecto)
+                    {
+
+
+                        _context.Update(clase);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    else
+                    {
+                        if (profeOcupadoEnEseHorario.Any())
+                        {
+                            ModelState.AddModelError(String.Empty, "Ese profesor ya tiene una clase asignada en ese horario.");
+
+                        }
+
+                        if (alumnoOcupadoEnEseHorario.Any())
+                        {
+                            ModelState.AddModelError(String.Empty, "Ese/a alumno/a ya tiene una clase asignada en ese horario.");
+
+                        }
+
+                        if (salonOcupadoEnEseHorario.Any())
+                        {
+                            ModelState.AddModelError(String.Empty, "Ese salón se encuentra ocupado en ese horario.");
+
+                        }
+
+
+                        if (salonIncorrectoAro)
+                        {
+                            ModelState.AddModelError(String.Empty, "El salón de Aro sólo está habilitado para clases de esa actividad.");
+
+                        }
+
+
+                        if (salonIncorrectoTela)
+                        {
+                            ModelState.AddModelError(String.Empty, "El salón de Tela sólo está habilitado para clases de esa actividad.");
+
+                        }
+
+
+                        if (salonIncorrectoTrapecio)
+                        {
+                            ModelState.AddModelError(String.Empty, "El salón de Trapecio sólo está habilitado para clases de esa actividad.");
+
+                        }
+
+
+
+
+
+
+                        ViewData["EstudianteId"] = new SelectList(_context.Estudiantes, "Id", "Apellido", clase.EstudianteId);
+                        ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", clase.ProfesorId);
+                        return View();
+
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

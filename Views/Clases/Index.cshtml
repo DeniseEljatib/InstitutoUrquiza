@@ -5,62 +5,66 @@
 }
 
 
+<div class="text-info">
 
-<h1>Clases agendadas</h1>
+    <h1>Clases agendadas</h1>
 
-    <img src="\imgs\IMG_3057.jpg" style="z-index:-10; width: 30%;" />
+    <img src="\imgs\Picture7.jpg" style="z-index:-10; width: 30%;" />
 
 
-<p>
-    <br>
-    <a asp-action="Create" ><b> Agendar nueva clase</b></a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Actividad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.horario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profesor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estudiante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salon)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <p>
+        <br>
+        <a asp-action="Create"><b> Agendar nueva clase</b></a>
+    </p>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Actividad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.horario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Profesor.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estudiante.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salon)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Actividad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.horario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Profesor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estudiante)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Salon)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Actividad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.horario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profesor.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estudiante.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salon)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
